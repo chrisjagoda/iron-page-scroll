@@ -121,7 +121,8 @@
           var page = document.querySelector('iron-page-scroll#example-2');
           var selector = document.querySelector('iron-selector');
           selector.addEventListener('click', function(e) {
-            page.select(e.srcElement.name);
+            var target = e.srcElement || e.target;
+            page.select(target.name);
           });
         </script>
       </template>

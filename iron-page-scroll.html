@@ -48,7 +48,14 @@ Example:
 
     _selectedPageChanged: function(selected) {
       if ((!this.useSelector && Number.isFinite(selected)) || selected.constructor === String) {
-        this.children[selected].scrollIntoView(this.settings);
+        var selectedPage;
+        if (this.children[selected]) {
+          selectedPage = this.children[selected];
+        }
+        else { // Workaround tested working with firefox v57.0
+          selectedPage = this.children.find(child => { return child.attributes.name.value === selected; });
+        }
+        selectedPage.scrollIntoView(this.settings);
       }
     }
   });
