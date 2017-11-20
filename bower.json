@@ -4,6 +4,9 @@
   "license": "MIT",
   "description": "Organizes a page of sections and scrolls to the selected section",
   "main": "iron-page-scroll.html",
+  "demos": {
+    "Demo": "demo/index.html"
+  },
   "authors": [
     "Christopher Jagoda"
   ],
