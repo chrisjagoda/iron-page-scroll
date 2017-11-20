@@ -1,0 +1,55 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/iron-selector/iron-selectable.html">
+
+<!--
+`iron-page-scroll` is used to select one of its children to scroll to. One use is to scroll between sections of a page.
+
+Example:
+
+    <iron-page-scroll>
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+    </iron-page-scroll>
+
+@demo demo/index.html
+-->
+
+<template id="iron-page-scroll">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+</template>
+<script>
+  Polymer({
+    is: 'iron-page-scroll',
+
+    behaviors: [
+      Polymer.IronSelectableBehavior,
+      Polymer.IronScrollTargetBehavior
+    ],
+
+    properties: {
+      settings: {
+        type: Object,
+        value: { behavior: "smooth", block: "start", inline: "nearest" }
+      },      
+      useSelector: {
+        type: Boolean,
+        value: false
+      },
+    },
+
+    observers: [
+      '_selectedPageChanged(selected)'
+    ],
+
+    _selectedPageChanged: function(selected) {
+      if ((!this.useSelector && Number.isFinite(selected)) || selected.constructor === String) {
+        this.children[selected].scrollIntoView(this.settings);
+      }
+    }
+  });
+</script>

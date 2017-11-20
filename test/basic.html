@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html>
+  <head>
+
+    <title>iron-page-scroll-basic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <link rel="import" href="../iron-page-scroll.html">
+    
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <iron-page-scroll>
+          <div id="page0">Page 0</div>
+          <div id="page1">Page 1</div>
+          <div id="page2">Page 2</div>
+          <div id="page3">Page 3</div>
+        </iron-page-scroll>
+      </template>
+    </test-fixture>
+
+    <script>
+
+      suite('basic', function() {
+        var pages;
+
+        suite('defaults', function() {
+          setup(function(done) {
+            pages = fixture('basic');
+            pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
+              pages.removeEventListener('iron-items-changed', onIronItemsChanged);
+              done();
+            });
+          });
+
+          test('to nothing selected', function() {
+            assert.equal(pages.selected, undefined);
+          });
+
+          test('null activateEvent', function() {
+            // `activateEvent` is not a useful feature for iron-page-scroll and it can interfere
+            // with ux; ensure iron-page-scroll has cleared any default `activateEvent`
+            assert.equal(pages.activateEvent, null);
+          });
+
+          test('to iron-selected as selectedClass', function() {
+            assert.equal(pages.selectedClass, 'iron-selected');
+          });
+
+          test('as many items as children', function() {
+            assert.equal(pages.items.length, 4);
+          });
+        });
+
+        suite('set the selected attribute', function() {
+          setup(function(done) {
+            pages = fixture('basic');
+            pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
+              pages.removeEventListener('iron-items-changed', onIronItemsChanged);
+
+              pages.selected = 0;
+              done();
+            });
+          });
+
+          test('selected value', function() {
+            assert.equal(pages.selected, '0');
+          });
+
+          test('selected item', function() {
+            assert.equal(pages.selectedItem, pages.items[0]);
+          });
+        });
+
+      });
+
+    </script>
+
+  </body>
+</html>

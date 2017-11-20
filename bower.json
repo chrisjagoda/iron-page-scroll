@@ -1,0 +1,36 @@
+{
+  "name": "iron-page-scroll",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Organizes a page of sections and scrolls to the selected section",
+  "main": "iron-page-scroll.html",
+  "authors": [
+    "Christopher Jagoda"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisjagoda/iron-page-scroll.git"
+  },
+  "keywords": [
+    "web-components",
+    "polymer",
+    "container",
+    "page-scroll",
+    "page-scroller"
+  ],
+  "dependencies": {
+    "iron-selector": "PolymerElements/iron-selector#1 - 2",
+    "polymer": "Polymer/polymer#1.9 - 2"
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#1 - 2",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
+    "paper-styles": "PolymerElements/paper-styles#1 - 2",
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "ignore": [],
+  "resolutions": {
+    "webcomponentsjs": "^1.0.0"
+  }
+}

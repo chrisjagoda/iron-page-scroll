@@ -1,0 +1,71 @@
+<!doctype html>
+
+<html>
+  <head>
+
+    <title>iron-page-scroll-attr-for-selected</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <link rel="import" href="../iron-page-scroll.html">
+
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <iron-page-scroll attr-for-selected="name" selected="page0">
+          <div name="page0">Page 0</div>
+          <div name="page1">Page 1</div>
+          <div name="page2">Page 2</div>
+          <div name="page3">Page 3</div>
+        </iron-page-scroll>
+      </template>
+    </test-fixture>
+
+    <script>
+
+      suite('basic', function() {
+        var pages;
+
+        suite('honor the selected attribute', function() {
+          setup(function () {
+            pages = fixture('basic');
+          });
+
+          test('selected value', function() {
+            assert.equal(pages.selected, 'page0');
+          });
+
+          test('selected item', function(done) {
+            // iron-selector uses observeNodes, which is async.
+            Polymer.Base.async(function() {
+              assert.equal(pages.selectedItem, pages.items[0])
+              done();
+            }, 1);
+          });
+        });
+
+        suite('set selected attribute', function() {
+          setup(function () {
+            pages = fixture('basic');
+            pages.selected = 'page2';
+          });
+
+          test('selected value', function() {
+            assert.equal(pages.selected, 'page2');
+          });
+
+          test('selected item', function() {
+            assert.equal(pages.selectedItem, pages.items[2]);
+          });
+        });
+
+      });
+
+    </script>
+
+  </body>
+</html>
