@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/chrisjagoda/iron-page-scroll)
+
 _[Demo and API docs](https://elements.polymer-project.org/elements/iron-page-scroll)_
 
 
@@ -20,13 +22,13 @@ It is also designed to be compatible with `iron selector`, being substitutible w
 Example:
 
 ```html
-<iron-selector attr-for-selected="name" selected="view1">
+<iron-selector attr-for-selected="name">
   <a name="view1">View One</a>
   <a name="view2">View Two</a>
   <a name="view3">View Three</a>
 </iron-selector>
 
-<iron-page-scroll selected="view1">
+<iron-page-scroll>
   <div name="view1">One</div>
   <div name="view2">Two</div>
   <div name="view3">Three</div>
