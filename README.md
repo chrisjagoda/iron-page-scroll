@@ -32,7 +32,7 @@ Example:
 </iron-page-scroll>
 
 <script>
-  var pages = document.querySelector('iron-page-scroll#example-2');
+  var pages = document.querySelector('iron-page-scroll');
   var selector = document.querySelector('iron-selector');
   selector.addEventListener('click', function(e) {
     pages.select(e.srcElement.name)
