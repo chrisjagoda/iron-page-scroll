@@ -1,8 +1,5 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/chrisjagoda/iron-page-scroll)
 
-_[Demo and API docs](https://elements.polymer-project.org/elements/iron-page-scroll)_
-
-
 ## &lt;iron-page-scroll&gt;
 
 `iron-page-scroll` is used to select one of its children to scroll to. One use is to scroll between sections of a page.
