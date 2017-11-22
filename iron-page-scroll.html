@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-selector/iron-selectable.html">
+<link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 <!--
 `iron-page-scroll` is used to select one of its children to scroll to. One use is to scroll between sections of a page.
@@ -27,18 +28,16 @@ Example:
     is: 'iron-page-scroll',
 
     behaviors: [
-      Polymer.IronSelectableBehavior
+      Polymer.IronSelectableBehavior,      
+      Polymer.IronScrollTargetBehavior
     ],
 
     properties: {
       settings: {
         type: Object,
         value: { behavior: "smooth", block: "start", inline: "nearest" }
-      },      
-      useSelector: {
-        type: Boolean,
-        value: false
       },
+      nextSelected: String
     },
 
     observers: [
@@ -46,15 +45,30 @@ Example:
     ],
 
     _selectedPageChanged: function(selected) {
-      if ((!this.useSelector && Number.isFinite(selected)) || selected.constructor === String) {
+      if (!selected || selected === this.nextSelected) { return; }
+      else if (selected.constructor === String) {
         var selectedPage;
         if (this.children[selected]) {
           selectedPage = this.children[selected];
         }
-        else { // Workaround tested working with firefox v57.0
+        else {
           selectedPage = this.children.find(child => { return child.attributes.name.value === selected; });
         }
         selectedPage.scrollIntoView(this.settings);
+      }
+    },
+
+    _scrollHandler: function() {
+      var nextSelection;
+      for (var i = 0; i < this.children.length; i++) {
+        if (this._scrollTop > this.children[i].offsetTop) {
+          nextSelection = this.children[i].attributes.name.value;
+        }      
+      }
+      if (nextSelection) {
+        this.nextSelected = nextSelection;
+        this.select(nextSelection);
+        console.log(nextSelection);
       }
     }
   });

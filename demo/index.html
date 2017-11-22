@@ -14,7 +14,8 @@
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-selector/iron-selector.html">
   <link rel="import" href="../../paper-styles/color.html">
-  <link rel="import" href="../iron-page-scroll.html">
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../iron-page-scroll.html">  
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -23,110 +24,101 @@
 </head>
 
 <body>
-  <div class="vertical-section-container centered">
-    <h3>iron-page-scroll scrolls to the selected child</h3>
-    <demo-snippet>
-      <template>
-        <custom-style>
-          <style is="custom-style">
-            iron-page-scroll {
-              width: 100%;
-              height: 100%;
-              font-size: 50px;
-              color: white;
-              text-align: center;
-            }
-            iron-page-scroll div {
-              width: 100%;
-              height: 600px;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-            }
-            iron-page-scroll div:nth-child(1) {
-              background-color: var(--google-blue-500);
-            }
-            iron-page-scroll div:nth-child(2) {
-              background-color: var(--google-red-500);
-            }
-            iron-page-scroll div:nth-child(3) {
-              background-color: var(--google-green-500);
-            }
-          </style>
-        </custom-style>
+  <dom-module id="iron-page-scroll-demo">
+    <div class="vertical-section-container centered">
+      <demo-snippet>
+        <template>
+          <custom-style>
+            <style is="custom-style">
+              iron-selector:hover {
+                cursor: pointer;
+              }
+              iron-selector a.iron-selected {            
+                font-weight: bold;
+              }
 
-        <p>Click on a section to scroll to it</p>
-        <iron-page-scroll id="example-1">
-          <div>One</div>
-          <div>Two</div>
-          <div>Three</div>
-        </iron-page-scroll>
-      </template>
-    </demo-snippet>
-  </div>
+              iron-page-scroll {
+                width: 100%;
+                height: 100%;
+                font-size: 50px;
+                color: white;
+                text-align: center;
+              }
+              iron-page-scroll div {
+                width: 100%;
+                height: 600px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+              }
+              iron-page-scroll div:nth-child(1) {
+                background-color: var(--google-blue-500);
+              }
+              iron-page-scroll div:nth-child(2) {
+                background-color: var(--google-red-500);
+              }
+              iron-page-scroll div:nth-child(3) {
+                background-color: var(--google-green-500);
+              }
+            </style>
+          </custom-style>
 
-  <div class="vertical-section-container centered">
-    <demo-snippet>
-      <template>
-        <custom-style>
-          <style is="custom-style">
-            iron-selector:hover {
-              cursor: pointer;
-            }
-            iron-selector a.iron-selected {            
-              font-weight: bold;
-            }
+          <p>Click on a selector to scroll to the page section</p>
+          <iron-selector selected="{{page}}" attr-for-selected="name">
+            <a name="view1">View One</a>
+            <a name="view2">View Two</a>
+            <a name="view3">View Three</a>
+          </iron-selector>
 
-            iron-page-scroll {
-              width: 100%;
-              height: 100%;
-              font-size: 50px;
-              color: white;
-              text-align: center;
-            }
-            iron-page-scroll div {
-              width: 100%;
-              height: 600px;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-            }
-            iron-page-scroll div:nth-child(1) {
-              background-color: var(--google-blue-500);
-            }
-            iron-page-scroll div:nth-child(2) {
-              background-color: var(--google-red-500);
-            }
-            iron-page-scroll div:nth-child(3) {
-              background-color: var(--google-green-500);
-            }
-          </style>
-        </custom-style>
+          <iron-page-scroll selected="{{page}}">
+            <div name="view1">One</div>
+            <div name="view2">Two</div>
+            <div name="view3">Three</div>
+          </iron-page-scroll>
 
-        <p>Click on a selector to scroll to the page section</p>
-        <iron-selector attr-for-selected="name">
-          <a name="view1">View One</a>
-          <a name="view2">View Two</a>
-          <a name="view3">View Three</a>
-        </iron-selector>
+          <script>
+            window.addEventListener('WebComponentsReady', function() {
+              class IronPageScrollDemo extends Polymer.Element {
+                static get is() { return 'iron-page-scroll-demo'; }
 
-        <iron-page-scroll use-selector id="example-2">
-          <div name="view1">One</div>
-          <div name="view2">Two</div>
-          <div name="view3">Three</div>
-        </iron-page-scroll>
+                static get properties() {
+                  return {
+                    page: {
+                      type: String,
+                      reflectToAttribute: true
+                      value: "view1"
+                    }
+                  };
+                }
 
-        <script>
-          var page = document.querySelector('iron-page-scroll#example-2');
-          var selector = document.querySelector('iron-selector');
-          selector.addEventListener('click', function(e) {
-            var target = e.srcElement || e.target;
-            page.select(target.name);
-          });
-        </script>
-      </template>
-    </demo-snippet>
-  </div>
+                static get observers() {
+                  return [
+                    '_pageChanged(page)',
+                  ];
+                }
+
+                _changePage() {
+                  console.log(this);
+                }
+
+                _pageChanged(page) {
+                  console.log(page, "changed");
+                }
+              }
+              //customElements.define(IronPageScrollDemo.is, IronPageScrollDemo);
+            });
+            // var target;
+            // var page = document.querySelector('iron-page-scroll');
+            // var selector = document.querySelector('iron-selector');
+            // selector.addEventListener('click', function(e) {
+            //   target = e.srcElement || e.target;
+            //   page.select(target.name);
+            // });
+          </script>
+        </template>
+      </demo-snippet>
+    </div>
+  </dom-module>
 </body>
 
 </html>
