@@ -37,7 +37,7 @@ Example:
         type: Object,
         value: { behavior: "smooth", block: "start", inline: "nearest" }
       },
-      nextSelected: String
+      _oldSelected: String
     },
 
     observers: [
@@ -45,30 +45,42 @@ Example:
     ],
 
     _selectedPageChanged: function(selected) {
-      if (!selected || selected === this.nextSelected) { return; }
+      if (!selected || this._oldSelected === this.selected) { return; }
       else if (selected.constructor === String) {
         var selectedPage;
         if (this.children[selected]) {
           selectedPage = this.children[selected];
         }
         else {
-          selectedPage = this.children.find(child => { return child.attributes.name.value === selected; });
+          if (this.children.find) {
+            selectedPage = this.children.find(function(child) { return child.attributes.name.value === selected; });
+          }
         }
-        selectedPage.scrollIntoView(this.settings);
+        if (selectedPage) {
+          selectedPage.scrollIntoView(this.settings);
+        }
       }
     },
 
     _scrollHandler: function() {
       var nextSelection;
-      for (var i = 0; i < this.children.length; i++) {
-        if (this._scrollTop > this.children[i].offsetTop) {
-          nextSelection = this.children[i].attributes.name.value;
-        }      
+      this._oldScrollTop = this._scrollTop;
+      if (this._scrollTop <= this.children[0].offsetTop) {
+        nextSelection = this.children[0].attributes.name.value;
+      }
+      else if (this._scrollTop >= this._scrollTargetHeight) {
+        nextSelection = this.children[this.children.length-1].attributes.name.value;
+      }
+      else {
+        for (var i = 0; i < this.children.length; i++) {
+          if (this._scrollTop >= this.children[i].offsetTop) {
+            nextSelection = this.children[i].attributes.name.value;
+          }
+        }
       }
       if (nextSelection) {
-        this.nextSelected = nextSelection;
+        this._oldSelected = nextSelection;
         this.select(nextSelection);
-        console.log(nextSelection);
       }
     }
   });
