@@ -11,10 +11,10 @@
 
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-selector/iron-selector.html">
   <link rel="import" href="../../paper-styles/color.html">
   <link rel="import" href="../../polymer/polymer.html">
-  <link rel="import" href="page-scroll-selector.html">
-  <link rel="import" href="page-scroll-attribute-name-selector.html">
+  <link rel="import" href="../iron-page-scroll.html">
 
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -25,8 +25,6 @@
 <body>
   <div class="vertical-section-container centered">
     <demo-snippet>
-      <page-scroll-attribute-name-selector>
-      </page-scroll-attribute-name-selector>
       <template>
         <style>
           :host {
@@ -34,10 +32,7 @@
           }
 
           .main {
-            /*Disabled to show demo*/
-            display: none;
-            /*Comment above and uncomment below to use example*/ 
-            /*display: inline-flex;*/ 
+            display: inline-flex;
             width: 100%;
           }
           .main .nav-bar {
@@ -86,33 +81,26 @@
             background-color: var(--google-green-500);
           }
         </style>
-        <div class="main">
-          <div class="nav-bar">
-            <iron-selector selected="{{page}}" attr-for-selected="name">
-              <a name="view1">View One</a>
-              <a name="view2">View Two</a>
-              <a name="view3">View Three</a>
-            </iron-selector>
-          </div>
-          <div class="scroll-area">
-            <iron-page-scroll selected="{{page}}" attr-for-selected="name">
-              <div name="view1">One</div>
-              <div name="view2">Two</div>
-              <div name="view3">Three</div>
-            </iron-page-scroll>
-          </div>
-        </div>
-        <script>
-          Polymer({
-            is: 'page-scroll-attribute-name-selector',
-            properties: {
-              page: {
-                type: String,
-                value: "view1"
-              }
-            }
-          });
-        </script>       
+        <dom-bind>
+          <template is="dom-bind">
+            <div class="main">
+              <div class="nav-bar">
+                <iron-selector selected="{{page}}">
+                  <a name="view1">View One</a>
+                  <a name="view2">View Two</a>
+                  <a name="view3">View Three</a>
+                </iron-selector>
+              </div>
+              <div class="scroll-area">
+                <iron-page-scroll selected="{{page}}">
+                  <div name="view1">One</div>
+                  <div name="view2">Two</div>
+                  <div name="view3">Three</div>
+                </iron-page-scroll>
+              </div>
+            </div>
+          </template>
+        </dom-bind>      
       </template>
     </demo-snippet>
   </div>
