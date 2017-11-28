@@ -1,8 +1,7 @@
-<link rel="import" href="../iron-page-scroll.html">
 <link rel="import" href="../../iron-selector/iron-selector.html">
+<link rel="import" href="../iron-page-scroll.html">
 
 <dom-module id="simple-page-scroller">
-
   <template>
     <style>
       :host {
@@ -21,7 +20,6 @@
       }
 
       iron-selector {
-        margin: 10px;
         display: inline;
         position: fixed;
       }
@@ -30,6 +28,7 @@
       }
       iron-selector a {
         display: inherit;
+        padding: 15px 0;
       }
       iron-selector a.iron-selected {
         font-weight: bold;
@@ -44,7 +43,7 @@
       }
       iron-page-scroll div {
         width: 100%;
-        height: 600px;
+        height: 800px;
         display: flex;
         flex-direction: column;
         justify-content: center;
