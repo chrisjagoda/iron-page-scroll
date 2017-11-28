@@ -2,16 +2,20 @@
 
 ## &lt;iron-page-scroll&gt;
 
-`iron-page-scroll` is used to select one of its children to scroll to. One use is to scroll between sections of a page.
+`iron-page-scroll` is used to select one of its children to scroll to and update the target on scrollover.
 
 Example:
 
 ```html
-<iron-page-scroll>
-  <div>One</div>
-  <div>Two</div>
-  <div>Three</div>
-</iron-page-scroll>
+<dom-bind>
+  <template is="dom-bind">
+    <iron-page-scroll selected={{page}}>
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+    </iron-page-scroll>
+  </template>
+</dom-bind>  
 ```
 
 It is also designed to be compatible with `iron selector`, being substitutible with `iron-pages`.
@@ -19,24 +23,19 @@ It is also designed to be compatible with `iron selector`, being substitutible w
 Example:
 
 ```html
-<iron-selector attr-for-selected="name">
-  <a name="view1">View One</a>
-  <a name="view2">View Two</a>
-  <a name="view3">View Three</a>
-</iron-selector>
+<dom-bind>
+  <template is="dom-bind">
+    <iron-selector selected="{{page}}" attr-for-selected="name">
+      <a name="view1">View One</a>
+      <a name="view2">View Two</a>
+      <a name="view3">View Three</a>
+    </iron-selector>
 
-<iron-page-scroll attr-for-selected="name">
-  <div name="view1">One</div>
-  <div name="view2">Two</div>
-  <div name="view3">Three</div>
-</iron-page-scroll>
-
-<script>
-  var pages = document.querySelector('iron-page-scroll');
-  var selector = document.querySelector('iron-selector');
-  selector.addEventListener('click', function(e) {
-    var target = e.srcElement || e.target;
-    page.select(target.name);
-  });
-</script>
+    <iron-page-scroll selected="{{page}}" attr-for-selected="name">
+      <div name="view1">One</div>
+      <div name="view2">Two</div>
+      <div name="view3">Three</div>
+    </iron-page-scroll>
+  </template>
+</dom-bind>
 ```
