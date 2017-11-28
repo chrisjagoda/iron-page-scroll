@@ -45,7 +45,7 @@ Example:
     ],
 
     _selectedPageChanged: function(selected) {
-      if (!selected || selected === this.nextSelected) { return; }
+      if (!selected || selected === this.nextSelected || selected === "{{page}}") { return; }
       else if (selected.constructor === String) {
         var selectedPage;
         if (this.children[selected]) {
