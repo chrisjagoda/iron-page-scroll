@@ -3,11 +3,17 @@
 <link rel="import" href="../iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 <!--
-`iron-page-scroll` is used to select one of its children to scroll to. One use is to scroll between sections of a page.
+`iron-page-scroll` is used to select one of its children to scroll to and update the target on scrollover in conjunction with `iron-selector`
 
 Example:
 
-    <iron-page-scroll>
+    <iron-selector selected="{{page}}">
+      <a>View One</a>
+      <a>View Two</a>
+      <a>View Three</a>
+    </iron-selector>
+
+    <iron-page-scroll selected="{{page}}">
       <div>One</div>
       <div>Two</div>
       <div>Three</div>
@@ -33,9 +39,17 @@ Example:
     ],
 
     properties: {
-      settings: {
+      settings: { // scroll settings
         type: Object,
         value: { behavior: "smooth", block: "start", inline: "nearest" }
+      },
+      offset: { // offset for when to switch selection on scroll - 10 default = 10px from top of new section
+        type: Number,
+        value: 10
+      },
+      activateEvent: { // disables switching of selected when a page section is clicked
+        type: String,
+        value: ""
       },
       _oldSelected: String
     },
@@ -45,16 +59,16 @@ Example:
     ],
 
     _selectedPageChanged: function(selected) {
-      if (!selected || this._oldSelected === this.selected) { return; }
-      else if (selected.constructor === String) {
+      if ((!selected && !Number.isFinite(selected)) || this._oldSelected === this.selected) { return; }
+      else {
         var selectedPage;
         if (this.children[selected]) {
           selectedPage = this.children[selected];
         }
-        else {
-          if (this.children.find) {
-            selectedPage = this.children.find(function(child) { return child.attributes.name.value === selected; });
-          }
+        else if (Array.isArray(this.children)) {
+          selectedPage = this.children.find(function(child) {
+            return child.attributes[this.attrForSelected].value === selected;
+          });
         }
         if (selectedPage) {
           selectedPage.scrollIntoView(this.settings);
@@ -65,20 +79,12 @@ Example:
     _scrollHandler: function() {
       var nextSelection;
       this._oldScrollTop = this._scrollTop;
-      if (this._scrollTop <= this.children[0].offsetTop) {
-        nextSelection = this.children[0].attributes.name.value;
-      }
-      // else if (this._scrollTop >= this._scrollTargetHeight) {
-      //   nextSelection = this.children[this.children.length-1].attributes.name.value;
-      // }
-      else {
-        for (var i = 0; i < this.children.length; i++) {
-          if (this._scrollTop >= this.children[i].offsetTop) {
-            nextSelection = this.children[i].attributes.name.value;
-          }
+      for (var i = 0; i < this.children.length; i++) {
+        if (this._scrollTop >= this.children[i].offsetTop - this.offset) {
+          nextSelection = (this.attrForSelected) ? this.children[i].attributes[this.attrForSelected].value : i;
         }
-      }
-      if (nextSelection) {
+      }      
+      if (nextSelection || Number.isFinite(nextSelection)) {
         this._oldSelected = nextSelection;
         this.select(nextSelection);
       }

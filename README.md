@@ -25,7 +25,7 @@ Example:
   <a name="view3">View Three</a>
 </iron-selector>
 
-<iron-page-scroll>
+<iron-page-scroll attr-for-selected="name">
   <div name="view1">One</div>
   <div name="view2">Two</div>
   <div name="view3">Three</div>

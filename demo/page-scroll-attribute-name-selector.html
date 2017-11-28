@@ -1,7 +1,7 @@
 <link rel="import" href="../../iron-selector/iron-selector.html">
 <link rel="import" href="../iron-page-scroll.html">
 
-<dom-module id="simple-page-scroller">
+<dom-module id="page-scroll-attribute-name-selector">
   <template>
     <style>
       :host {
@@ -67,19 +67,19 @@
         </iron-selector>
       </div>
       <div class="scroll-area">
-        <iron-page-scroll selected="{{page}}">
+        <iron-page-scroll selected="{{page}}" attr-for-selected="name">
           <div name="view1">One</div>
           <div name="view2">Two</div>
           <div name="view3">Three</div>
         </iron-page-scroll>
       </div>
-    <div>
+    </div>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: 'simple-page-scroller',
+    is: 'page-scroll-attribute-name-selector',
     properties: {
       page: {
         type: String,
