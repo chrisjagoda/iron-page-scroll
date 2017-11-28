@@ -1,0 +1,91 @@
+<link rel="import" href="../iron-page-scroll.html">
+<link rel="import" href="../../iron-selector/iron-selector.html">
+
+<dom-module id="simple-page-scroller">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .main {
+        display: inline-flex;
+        width: 100%;
+      }
+      .main .nav-bar {
+        flex: 25%;
+      }
+      .main .scroll-area {
+        flex: 75%;
+      }
+
+      iron-selector {
+        margin: 10px;
+        display: inline;
+        position: fixed;
+      }
+      iron-selector:hover {
+        cursor: pointer;
+      }
+      iron-selector a {
+        display: inherit;
+      }
+      iron-selector a.iron-selected {
+        font-weight: bold;
+      }
+
+      iron-page-scroll {
+        width: 100%;
+        height: 100%;
+        font-size: 50px;
+        color: white;
+        text-align: center;
+      }
+      iron-page-scroll div {
+        width: 100%;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      iron-page-scroll div:nth-child(1) {
+        background-color: var(--google-blue-500);
+      }
+      iron-page-scroll div:nth-child(2) {
+        background-color: var(--google-red-500);
+      }
+      iron-page-scroll div:nth-child(3) {
+        background-color: var(--google-green-500);
+      }
+    </style>
+    <div class="main">
+      <div class="nav-bar">
+        <iron-selector selected="{{page}}" attr-for-selected="name">
+          <a name="view1">View One</a>
+          <a name="view2">View Two</a>
+          <a name="view3">View Three</a>
+        </iron-selector>
+      </div>
+      <div class="scroll-area">
+        <iron-page-scroll selected="{{page}}">
+          <div name="view1">One</div>
+          <div name="view2">Two</div>
+          <div name="view3">Three</div>
+        </iron-page-scroll>
+      </div>
+    <div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'simple-page-scroller',
+    properties: {
+      page: {
+        type: String,
+        value: "view1"
+      }
+    }
+  });
+</script>
